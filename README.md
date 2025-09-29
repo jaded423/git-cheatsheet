@@ -2,6 +2,28 @@
 
 ## Quick Reference: Creating a New Project and Pushing to GitHub
 
+## SuperQuick Cheat Sheet
+```bash 
+# 1. Create project 
+mkdir new-project && cd new-project 
+
+# 2. Initialize Git 
+git init 
+
+# 3. Create files 
+echo "# Test" > README.md 
+
+# 4. Stage and commit 
+git add . git commit -m "Initial commit" 
+
+# 5. Create repo and push 
+gh repo create new-project --public --source=. --remote=origin --push 
+
+# 6. Delete when done testing 
+gh repo delete username/new-project cd .. rm -rf new-project
+```
+
+
 ### Step 1: Create Project Directory
 ```bash
 # Navigate to projects folder
