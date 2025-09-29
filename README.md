@@ -2,28 +2,6 @@
 
 ## Quick Reference: Creating a New Project and Pushing to GitHub
 
-## SuperQuick Cheat Sheet
-```bash 
-# 1. Create project 
-mkdir new-project && cd new-project 
-
-# 2. Initialize Git 
-git init 
-
-# 3. Create files 
-echo "# Test" > README.md 
-
-# 4. Stage and commit 
-git add . git commit -m "Initial commit" 
-
-# 5. Create repo and push 
-gh repo create new-project --public --source=. --remote=origin --push 
-
-# 6. Delete when done testing 
-gh repo delete username/new-project cd .. rm -rf new-project
-```
-
-
 ### Step 1: Create Project Directory
 ```bash
 # Navigate to projects folder
@@ -303,23 +281,155 @@ Run through the complete workflow for each one!
 
 ---
 
-## Next Level: Working with Branches
+## Complete Testing Workflow
 
-Once comfortable with the basics, learn branching:
+Quick workflow for creating and deleting test repos:
 
 ```bash
-# Create new branch
-git checkout -b feature-name
+# 1. Create project
+mkdir new-project && cd new-project
 
-# Switch branches
-git checkout main
+# 2. Initialize Git
+git init
 
-# List branches
+# 3. Create files
+echo "# Test" > README.md
+
+# 4. Stage and commit
+git add .
+git commit -m "Initial commit"
+
+# 5. Create repo and push
+gh repo create new-project --public --source=. --remote=origin --push
+
+# 6. Delete when done testing
+gh repo delete username/new-project
+cd ..
+rm -rf new-project
+```
+
+---
+
+## Working with Branches
+
+### What Are Branches?
+
+Branches are **parallel versions** of your code. The `master` branch is your main/production code, and other branches let you work on features without affecting the main code.
+
+### Single Branch (Simple Approach)
+
+**Pros:**
+- Simple and fast
+- Good for solo projects
+- Easy to understand
+- Linear history
+
+**Cons:**
+- Risky - one bad commit breaks everything
+- No safe experimentation
+- Hard to work on multiple features
+
+### Multiple Branches (Advanced Approach)
+
+**Pros:**
+- Safe experimentation
+- Work on multiple features simultaneously
+- Easy rollback of bad ideas
+- Better for team collaboration
+- Code review before merging
+
+**Cons:**
+- More complex
+- Merge conflicts possible
+- Extra steps required
+- Can be overkill for simple projects
+
+### Basic Branch Commands
+
+```bash
+# See all branches (* shows current)
 git branch
 
-# Merge branch into main
-git checkout main
+# Create new branch
+git branch feature-name
+
+# Switch to a branch
+git checkout feature-name
+
+# Create and switch in one command
+git checkout -b feature-name
+
+# Merge branch into current branch
+git checkout master
 git merge feature-name
+
+# Delete branch
+git branch -d feature-name
+
+# Push branch to GitHub
+git push -u origin feature-name
+
+# See all branches (including remote)
+git branch -a
+```
+
+### Feature Branch Workflow Example
+
+```bash
+# Start on master - your stable code
+git checkout master
+
+# Create a new branch for a feature
+git checkout -b add-new-prompt
+
+# Work on the feature, make commits
+nvim prompts/new-feature.md
+git add .
+git commit -m "Add new feature prompt"
+
+# Switch back to master (changes disappear)
+git checkout master
+
+# Switch back to feature branch (changes return)
+git checkout add-new-prompt
+
+# When feature is done, merge to master
+git checkout master
+git merge add-new-prompt
+
+# Delete the feature branch
+git branch -d add-new-prompt
+
+# Push to GitHub
+git push
+```
+
+### When to Use Branches
+
+**Stick with single branch (master) when:**
+- Personal learning projects
+- Solo developer
+- Small/simple projects
+- Rapid prototyping
+
+**Use multiple branches when:**
+- Team projects
+- Production applications
+- Want to experiment safely
+- Need code review
+- Working on multiple features at once
+- Have users depending on stable version
+
+### Visual Example
+
+```
+Single Branch:
+master: A -> B -> C -> D -> E
+
+Multiple Branches:
+master:         A -> B --------> F (merge) -> G
+                      \         /
+feature-login:         C -> D -> E
 ```
 
 ---
